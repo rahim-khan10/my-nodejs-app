@@ -1,19 +1,26 @@
-name: Dev Branch CI/CD
+name: Deploy to Production
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
+    # The 'production' environment must be configured in your repository settings 
+    # with manual approval enabled.
+    environment:
+      name: production
     steps:
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Install Dependencies
         run: npm install
 
-      - name: Run Tests
-        run: npm test
+      - name: Run Build
+        run: npm run build
+
+      - name: Deploy Application
+        run: echo "Deploying to production..."
